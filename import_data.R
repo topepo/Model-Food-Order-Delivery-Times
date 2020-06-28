@@ -8,6 +8,7 @@ library(fs)
 # Those documents do not indicate the original origin and, although there is 
 # reference to a data description file, none were included in any commits. 
 # Searches for column names did not yield any indication of the data origin. 
+# The original repo contained no license information. 
 
 # We'll create a modified version of these data that includes an artificially
 # right-censored values that emulate stopping all data collection at 8pm. Any
@@ -76,7 +77,7 @@ delivery_times <-
     obs_time = case_when(
       actual_delivery_time >= censor_time ~ censor_time,
       TRUE ~ actual_delivery_time),
-    censored = ifelse(obs_time == censor_time, 1, 0),
+    censored = obs_time == censor_time,
     min_to_delivery = difftime(obs_time, created_at, units = "mins"),
     min_to_delivery = as.numeric(min_to_delivery)
   ) %>% 
